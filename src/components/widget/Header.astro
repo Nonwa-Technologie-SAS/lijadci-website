@@ -1,0 +1,171 @@
+---
+import Logo from "../../assets/images/logo.jpeg";
+
+//  Actualités
+//  Événements
+//  Opportunités
+//  Galerie
+//  Partenaires
+//  Adhésion
+//  Contact
+//  
+
+const links = [
+	{ href: "/", label: "Accueil" },
+	{ href: "/about", label: "À propos" },
+    { href: "/actions", label: "Nos actions" },
+    { href: "/actualites", label: "Actualités" },
+    { href: "/evenements", label: "Événements" },
+    { href: "/opportunites", label: "Opportunités" },
+    { href: "/galerie", label: "Galerie" },
+    { href: "/partenaires", label: "Partenaires" },
+    { href: "/adhesion", label: "Adhésion" },
+	{ href: "/contact", label: "Contact" },
+] as const;
+---
+
+<header
+	class="sticky top-0 z-50 w-full border-b border-green-900/15 bg-white/90 shadow-sm backdrop-blur-md"
+>
+	<div
+		class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8"
+	>
+		<a
+			href="/"
+			class="shrink-0 rounded-md outline-none ring-green-900/30 focus-visible:ring-2"
+		>
+			<img
+				src={Logo.src}
+				alt="Lijadci — Accueil"
+				class="h-11 w-auto sm:h-14"
+				fetchpriority="high"
+			/>
+		</a>
+
+		<nav class="hidden md:block" aria-label="Navigation principale">
+			<ul class="flex items-center gap-1 lg:gap-2">
+				{
+					links.map(({ href, label }) => (
+						<li>
+							<a
+								href={href}
+								class="rounded-lg px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-green-50 hover:text-green-900"
+							>
+								{label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+
+		<button
+			type="button"
+			id="header-menu-btn"
+			class="inline-flex h-11 w-11 items-center justify-center rounded-lg text-green-900 outline-none ring-green-900/30 hover:bg-green-50 focus-visible:ring-2 md:hidden"
+			aria-expanded="false"
+			aria-controls="header-mobile-nav"
+			aria-label="Ouvrir le menu"
+		>
+			<span class="sr-only">Menu</span>
+			<svg
+				class="header-icon-menu h-6 w-6"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				viewBox="0 0 24 24"
+				aria-hidden="true"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M4 6h16M4 12h16M4 18h16"
+				/>
+			</svg>
+			<svg
+				class="header-icon-close hidden h-6 w-6"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				viewBox="0 0 24 24"
+				aria-hidden="true"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M6 18L18 6M6 6l12 12"
+				/>
+			</svg>
+		</button>
+	</div>
+
+	<div
+		id="header-mobile-nav"
+		class="hidden border-t border-green-900/10 bg-white md:hidden"
+		role="navigation"
+		aria-label="Navigation mobile"
+	>
+		<div class="mx-auto max-w-7xl px-4 py-4 sm:px-6">
+			<ul class="flex flex-col gap-1">
+				{
+					links.map(({ href, label }) => (
+						<li>
+							<a
+								href={href}
+								class="block rounded-lg px-3 py-3 text-base font-medium text-neutral-800 transition-colors hover:bg-green-50 hover:text-green-900"
+							>
+								{label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</div>
+</header>
+
+<script>
+	let navAbort: AbortController | undefined;
+
+	function setupHeaderNav() {
+		if (navAbort) navAbort.abort();
+		navAbort = new AbortController();
+		const { signal } = navAbort;
+
+		const btn = document.getElementById("header-menu-btn");
+		const panel = document.getElementById("header-mobile-nav");
+		const iconMenu = btn?.querySelector(".header-icon-menu");
+		const iconClose = btn?.querySelector(".header-icon-close");
+		if (!btn || !panel || !iconMenu || !iconClose) return;
+
+		const setOpen = (open: boolean) => {
+			panel.classList.toggle("hidden", !open);
+			btn.setAttribute("aria-expanded", String(open));
+			btn.setAttribute(
+				"aria-label",
+				open ? "Fermer le menu" : "Ouvrir le menu",
+			);
+			iconMenu.classList.toggle("hidden", open);
+			iconClose.classList.toggle("hidden", !open);
+		};
+
+		btn.addEventListener(
+			"click",
+			() => {
+				setOpen(panel.classList.contains("hidden"));
+			},
+			{ signal },
+		);
+
+		window.addEventListener(
+			"keydown",
+			(e) => {
+				if (e.key === "Escape") setOpen(false);
+			},
+			{ signal },
+		);
+	}
+
+	setupHeaderNav();
+	document.addEventListener("astro:page-load", setupHeaderNav);
+</script>

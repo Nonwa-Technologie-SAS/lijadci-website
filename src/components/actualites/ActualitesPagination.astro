@@ -1,0 +1,82 @@
+---
+interface Props {
+	currentPage: number;
+	totalPages: number;
+}
+
+const { currentPage, totalPages } = Astro.props;
+
+const pageHref = (n: number) => (n === 1 ? "/actualites" : `/actualites/page/${n}`);
+
+const windowSize = 5;
+let start = Math.max(1, currentPage - Math.floor(windowSize / 2));
+let end = Math.min(totalPages, start + windowSize - 1);
+if (end - start + 1 < windowSize) {
+	start = Math.max(1, end - windowSize + 1);
+}
+const pageNumbers: number[] = [];
+for (let i = start; i <= end; i++) pageNumbers.push(i);
+---
+
+{
+	totalPages > 1 && (
+		<nav
+			class="mt-12 flex flex-col items-center gap-4 border-t border-green-900/10 pt-10 sm:flex-row sm:justify-between"
+			aria-label="Pagination des actualités"
+		>
+			<p class="order-2 text-sm text-neutral-600 sm:order-1">
+				Page <span class="font-semibold text-green-950">{currentPage}</span> sur{" "}
+				<span class="font-semibold text-green-950">{totalPages}</span>
+			</p>
+			<ul class="order-1 flex flex-wrap items-center justify-center gap-2 sm:order-2">
+				<li>
+					{currentPage <= 1 ? (
+						<span class="inline-flex min-h-10 min-w-10 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-100 px-3 text-sm text-neutral-400">
+							Précédent
+						</span>
+					) : (
+						<a
+							href={pageHref(currentPage - 1)}
+							class="inline-flex min-h-10 items-center justify-center rounded-lg border border-green-900/20 bg-white px-3 text-sm font-medium text-green-900 shadow-sm transition hover:border-green-900/35 hover:bg-green-50 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-900"
+						>
+							Précédent
+						</a>
+					)}
+				</li>
+				{pageNumbers.map((n) => (
+					<li>
+						{n === currentPage ? (
+							<span
+								class="inline-flex h-10 min-w-10 items-center justify-center rounded-lg bg-green-900 px-3 text-sm font-semibold text-white"
+								aria-current="page"
+							>
+								{n}
+							</span>
+						) : (
+							<a
+								href={pageHref(n)}
+								class="inline-flex h-10 min-w-10 items-center justify-center rounded-lg border border-green-900/15 bg-white text-sm font-medium text-green-900 transition hover:border-green-900/30 hover:bg-green-50 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-900"
+							>
+								{n}
+							</a>
+						)}
+					</li>
+				))}
+				<li>
+					{currentPage >= totalPages ? (
+						<span class="inline-flex min-h-10 min-w-10 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-100 px-3 text-sm text-neutral-400">
+							Suivant
+						</span>
+					) : (
+						<a
+							href={pageHref(currentPage + 1)}
+							class="inline-flex min-h-10 items-center justify-center rounded-lg border border-green-900/20 bg-white px-3 text-sm font-medium text-green-900 shadow-sm transition hover:border-green-900/35 hover:bg-green-50 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-900"
+						>
+							Suivant
+						</a>
+					)}
+				</li>
+			</ul>
+		</nav>
+	)
+}

@@ -1,0 +1,153 @@
+---
+import Layout from "../layouts/Layout.astro";
+import {
+	evenementsAVenir,
+	evenementsPasses,
+	labelEvenementType,
+} from "../data/evenements";
+
+const aVenir = evenementsAVenir();
+const passes = evenementsPasses();
+---
+
+<Layout>
+	<main class="bg-neutral-50 text-neutral-900">
+		<div
+			class="relative overflow-hidden border-b border-green-900/10 bg-linear-to-br from-green-900 via-green-800 to-emerald-950 px-4 py-14 text-white sm:px-6 lg:px-8"
+		>
+			<div
+				class="pointer-events-none absolute -right-20 top-10 h-56 w-56 rounded-full bg-orange-400/20 blur-3xl"
+				aria-hidden="true"
+			>
+			</div>
+			<div class="relative mx-auto max-w-7xl">
+				<p class="text-sm font-medium uppercase tracking-widest text-green-200/90">
+					Agenda
+				</p>
+				<h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+					Événements
+				</h1>
+				<p class="mt-4 max-w-2xl text-base text-green-100/95 sm:text-lg">
+					Conférences, ateliers, séminaires et campagnes : retrouvez les temps forts du
+					mouvement. Les inscriptions en ligne seront précisées pour chaque format.
+				</p>
+			</div>
+		</div>
+
+		<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+			<section class="max-w-3xl" aria-labelledby="evt-intro">
+				<h2 id="evt-intro" class="sr-only">Introduction</h2>
+				<p class="text-lg font-medium text-green-950">
+					Participez aux rencontres LIJADCI pour vous former, échanger et agir aux côtés
+					d’autres jeunes engagé·es.
+				</p>
+				<p class="mt-4 text-base leading-relaxed text-neutral-700">
+					Le détail des modalités (lieu exact, lien visio, documents) pourra être mis à
+					jour dans chaque fiche ou via le futur espace d’édition (CMS).
+				</p>
+			</section>
+
+			<section class="mt-16" aria-labelledby="evt-a-venir">
+				<h2
+					id="evt-a-venir"
+					class="text-2xl font-bold tracking-tight text-green-950 sm:text-3xl"
+				>
+					À venir
+				</h2>
+				{
+					aVenir.length === 0 ? (
+						<p class="mt-6 rounded-2xl border border-green-900/10 bg-white p-8 text-neutral-600">
+							Aucun événement à venir pour le moment. Revenez bientôt ou contactez-nous
+							pour être tenu·e informé·e.
+						</p>
+					) : (
+						<ul class="mt-8 space-y-4">
+							{aVenir.map((evt) => (
+								<li>
+									<article class="flex flex-col gap-4 rounded-2xl border border-green-900/10 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:gap-6 sm:p-6">
+										<time
+											class="flex h-24 w-24 shrink-0 flex-col items-center justify-center rounded-xl bg-green-900 text-center text-white shadow-sm"
+											datetime={evt.dateIso}
+										>
+											<span class="text-2xl font-bold leading-none">{evt.day}</span>
+											<span class="mt-1 text-xs font-medium capitalize text-green-100">
+												{evt.month}
+											</span>
+											<span class="text-[10px] text-green-200/90">{evt.year}</span>
+										</time>
+										<div class="min-w-0 flex-1">
+											<p class="text-xs font-semibold uppercase tracking-wide text-green-700">
+												{labelEvenementType(evt.type)}
+											</p>
+											<h3 class="mt-1 text-lg font-semibold text-green-950">
+												{evt.title}
+											</h3>
+											<p class="mt-1 text-sm text-neutral-600">
+												{evt.time ? `${evt.time} · ` : ""}
+												{evt.location}
+											</p>
+											<p class="mt-2 text-sm leading-relaxed text-neutral-700">
+												{evt.excerpt}
+											</p>
+											<div class="mt-4 flex flex-wrap gap-3">
+												{evt.inscriptionHref ? (
+													<a
+														href={evt.inscriptionHref}
+														class="inline-flex rounded-xl bg-green-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-800"
+													>
+														S’inscrire / Infos
+													</a>
+												) : null}
+												<a
+													href="/contact"
+													class="inline-flex rounded-xl border border-green-900/25 px-4 py-2.5 text-sm font-semibold text-green-900 transition hover:bg-green-50"
+												>
+													Nous contacter
+												</a>
+											</div>
+										</div>
+									</article>
+								</li>
+							))}
+						</ul>
+					)
+				}
+			</section>
+
+			<section class="mt-16 lg:mt-20" aria-labelledby="evt-passes">
+				<h2
+					id="evt-passes"
+					class="text-2xl font-bold tracking-tight text-green-950 sm:text-3xl"
+				>
+					Archives récentes
+				</h2>
+				<p class="mt-2 text-neutral-600">
+					Retour sur des événements déjà organisés par le mouvement.
+				</p>
+				{
+					passes.length === 0 ? (
+						<p class="mt-6 text-sm text-neutral-500">Aucun événement archivé pour l’instant.</p>
+					) : (
+						<ul class="mt-8 divide-y divide-green-900/10 rounded-2xl border border-green-900/10 bg-white">
+							{passes.map((evt) => (
+								<li class="px-5 py-4 sm:px-6">
+									<article class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+										<div>
+											<p class="text-xs font-semibold uppercase tracking-wide text-green-700">
+												{labelEvenementType(evt.type)} ·{" "}
+												<time datetime={evt.dateIso}>{evt.dateLabel}</time>
+											</p>
+											<h3 class="mt-1 font-semibold text-green-950">{evt.title}</h3>
+											<p class="mt-1 text-sm text-neutral-600">{evt.location}</p>
+										</div>
+										<p class="max-w-xl text-sm text-neutral-700">{evt.excerpt}</p>
+									</article>
+								</li>
+							))}
+						</ul>
+					)
+				}
+			</section>
+		</div>
+	</main>
+</Layout>

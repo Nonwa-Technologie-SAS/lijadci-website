@@ -1,0 +1,295 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+/** Coordonnées affichées sur la page — à adapter. */
+const contact = {
+	email: "contact@lijadci.ci",
+	phoneDisplay: "+225 XX XX XX XX XX",
+	phoneTel: "+2250000000000",
+	locationTitle: "Siège & accès",
+	addressLines: [
+		"Abidjan, Côte d'Ivoire",
+		"Adresse complète à renseigner",
+	],
+	mapsUrl:
+		"https://www.google.com/maps/search/?api=1&query=Abidjan%2C%20C%C3%B4te%20d%27Ivoire",
+};
+
+/**
+ * Soumission du formulaire : créez un formulaire sur https://formspree.io
+ * puis remplacez l’URL ci-dessous par la vôtre (ou branchez votre API).
+ */
+const FORM_ENDPOINT = "https://formspree.io/f/VOTRE_ID";
+---
+
+<Layout>
+	<main class="bg-neutral-50 text-neutral-900">
+		<div
+			class="border-b border-green-900/10 bg-linear-to-br from-green-900 via-green-800 to-green-950 px-4 py-14 text-white sm:px-6 lg:px-8"
+		>
+			<div class="mx-auto max-w-7xl">
+				<p class="text-sm font-medium uppercase tracking-widest text-green-200/90">
+					Écrivez-nous
+				</p>
+				<h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+					Contact
+				</h1>
+				<p class="mt-4 max-w-2xl text-base text-green-100/95 sm:text-lg">
+					Une question, un partenariat ou une demande d’information ? Utilisez le
+					formulaire ou contactez-nous directement.
+				</p>
+			</div>
+		</div>
+
+		<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-10 lg:px-8 lg:py-16">
+			<section
+				class="space-y-4 lg:col-span-5"
+				aria-labelledby="contact-infos-heading"
+			>
+				<h2 id="contact-infos-heading" class="text-lg font-semibold text-green-900">
+					Coordonnées
+				</h2>
+				<ul class="space-y-4">
+					<li>
+						<a
+							href={`mailto:${contact.email}`}
+							class="group flex gap-4 rounded-2xl border border-green-900/10 bg-white p-5 shadow-sm transition hover:border-green-900/20 hover:shadow-md"
+						>
+							<span
+								class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-900 ring-1 ring-green-900/10"
+								aria-hidden="true"
+							>
+								<svg
+									class="h-6 w-6"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="1.75"
+									viewBox="0 0 24 24"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+									/>
+								</svg>
+							</span>
+							<div class="min-w-0">
+								<p class="text-sm font-medium text-neutral-500">E-mail</p>
+								<p
+									class="mt-0.5 break-all text-base font-semibold text-green-950 group-hover:underline"
+								>
+									{contact.email}
+								</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a
+							href={`tel:${contact.phoneTel}`}
+							class="group flex gap-4 rounded-2xl border border-green-900/10 bg-white p-5 shadow-sm transition hover:border-green-900/20 hover:shadow-md"
+						>
+							<span
+								class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-900 ring-1 ring-green-900/10"
+								aria-hidden="true"
+							>
+								<svg
+									class="h-6 w-6"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="1.75"
+									viewBox="0 0 24 24"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
+									/>
+								</svg>
+							</span>
+							<div class="min-w-0">
+								<p class="text-sm font-medium text-neutral-500">Téléphone</p>
+								<p
+									class="mt-0.5 text-base font-semibold text-green-950 group-hover:underline"
+								>
+									{contact.phoneDisplay}
+								</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<div
+							class="flex gap-4 rounded-2xl border border-green-900/10 bg-white p-5 shadow-sm"
+						>
+							<span
+								class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-900 ring-1 ring-green-900/10"
+								aria-hidden="true"
+							>
+								<svg
+									class="h-6 w-6"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="1.75"
+									viewBox="0 0 24 24"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+									/>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+									/>
+								</svg>
+							</span>
+							<div class="min-w-0 flex-1">
+								<p class="text-sm font-medium text-neutral-500">
+									{contact.locationTitle}
+								</p>
+								{
+									contact.addressLines.map((line) => (
+										<p class="mt-0.5 text-base font-semibold text-green-950 first:mt-0.5">
+											{line}
+										</p>
+									))
+								}
+								<a
+									href={contact.mapsUrl}
+									class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-green-800 underline decoration-green-800/30 underline-offset-4 hover:decoration-green-800"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									Ouvrir dans Maps
+									<span aria-hidden="true">↗</span>
+								</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</section>
+
+			<section
+				class="mt-10 lg:col-span-7 lg:mt-0"
+				aria-labelledby="contact-form-heading"
+			>
+				<div
+					class="rounded-2xl border border-green-900/10 bg-white p-6 shadow-sm sm:p-8"
+				>
+					<h2 id="contact-form-heading" class="text-lg font-semibold text-green-900">
+						Formulaire de contact
+					</h2>
+					<p class="mt-1 text-sm text-neutral-600">
+						Les champs marqués d’un astérisque (*) sont obligatoires.
+					</p>
+
+					<form
+						class="mt-6 space-y-5"
+						action={FORM_ENDPOINT}
+						method="POST"
+					>
+						<input type="hidden" name="_subject" value="Message depuis lijadci — contact" />
+						<div class="grid gap-5 sm:grid-cols-2">
+							<div class="sm:col-span-2 sm:grid sm:grid-cols-2 sm:gap-5">
+								<div>
+									<label
+										for="contact-name"
+										class="block text-sm font-medium text-neutral-800"
+									>
+										Nom complet <span class="text-red-600">*</span>
+									</label>
+									<input
+										id="contact-name"
+										name="name"
+										type="text"
+										autocomplete="name"
+										required
+										class="mt-1.5 w-full rounded-xl border border-neutral-200 bg-neutral-50/80 px-4 py-3 text-neutral-900 outline-none ring-green-900/20 transition placeholder:text-neutral-400 focus:border-green-800 focus:bg-white focus:ring-2"
+										placeholder="Jean Dupont"
+									/>
+								</div>
+								<div>
+									<label
+										for="contact-email"
+										class="block text-sm font-medium text-neutral-800"
+									>
+										E-mail <span class="text-red-600">*</span>
+									</label>
+									<input
+										id="contact-email"
+										name="email"
+										type="email"
+										autocomplete="email"
+										required
+										class="mt-1.5 w-full rounded-xl border border-neutral-200 bg-neutral-50/80 px-4 py-3 text-neutral-900 outline-none ring-green-900/20 transition placeholder:text-neutral-400 focus:border-green-800 focus:bg-white focus:ring-2"
+										placeholder="vous@exemple.com"
+									/>
+								</div>
+							</div>
+							<div class="sm:col-span-2">
+								<label
+									for="contact-phone"
+									class="block text-sm font-medium text-neutral-800"
+								>
+									Téléphone
+								</label>
+								<input
+									id="contact-phone"
+									name="phone"
+									type="tel"
+									autocomplete="tel"
+									class="mt-1.5 w-full rounded-xl border border-neutral-200 bg-neutral-50/80 px-4 py-3 text-neutral-900 outline-none ring-green-900/20 transition placeholder:text-neutral-400 focus:border-green-800 focus:bg-white focus:ring-2"
+									placeholder="+225 …"
+								/>
+							</div>
+							<div class="sm:col-span-2">
+								<label
+									for="contact-subject"
+									class="block text-sm font-medium text-neutral-800"
+								>
+									Sujet <span class="text-red-600">*</span>
+								</label>
+								<input
+									id="contact-subject"
+									name="subject"
+									type="text"
+									required
+									class="mt-1.5 w-full rounded-xl border border-neutral-200 bg-neutral-50/80 px-4 py-3 text-neutral-900 outline-none ring-green-900/20 transition placeholder:text-neutral-400 focus:border-green-800 focus:bg-white focus:ring-2"
+									placeholder="Objet de votre message"
+								/>
+							</div>
+							<div class="sm:col-span-2">
+								<label
+									for="contact-message"
+									class="block text-sm font-medium text-neutral-800"
+								>
+									Message <span class="text-red-600">*</span>
+								</label>
+								<textarea
+									id="contact-message"
+									name="message"
+									rows="5"
+									required
+									class="mt-1.5 w-full resize-y rounded-xl border border-neutral-200 bg-neutral-50/80 px-4 py-3 text-neutral-900 outline-none ring-green-900/20 transition placeholder:text-neutral-400 focus:border-green-800 focus:bg-white focus:ring-2"
+									placeholder="Votre message…"
+								></textarea>
+							</div>
+						</div>
+
+						<p class="text-xs text-neutral-500">
+							En envoyant ce formulaire, vous acceptez d’être recontacté par LIJADCI
+							concernant votre demande.
+						</p>
+
+						<button
+							type="submit"
+							class="inline-flex w-full items-center justify-center rounded-xl bg-green-900 px-5 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-green-800 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-900 focus-visible:ring-offset-2 sm:w-auto"
+						>
+							Envoyer le message
+						</button>
+					</form>
+				</div>
+			</section>
+		</div>
+	</main>
+</Layout>

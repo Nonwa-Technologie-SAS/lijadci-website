@@ -1,0 +1,87 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { actualites, getActualiteBySlug } from "../../data/actualites";
+
+export function getStaticPaths() {
+	return actualites.map((article) => ({
+		params: { slug: article.slug },
+	}));
+}
+
+const { slug } = Astro.params;
+const article = slug ? getActualiteBySlug(slug) : undefined;
+
+if (!article) {
+	throw new Error(`Actualité introuvable : ${slug}`);
+}
+---
+
+<Layout>
+	<main class="bg-neutral-50 text-neutral-900">
+		<article>
+			<header
+				class="border-b border-green-900/10 bg-linear-to-br from-green-900 via-green-800 to-green-950 px-4 py-12 text-white sm:px-6 sm:py-16 lg:px-8"
+			>
+				<div class="mx-auto max-w-3xl">
+					<nav aria-label="Fil d’Ariane">
+						<ol class="flex flex-wrap items-center gap-2 text-sm text-green-200/90">
+							<li>
+								<a
+									href="/actualites"
+									class="rounded underline decoration-green-200/40 underline-offset-2 outline-none hover:decoration-white focus-visible:ring-2 focus-visible:ring-white"
+								>
+									Actualités
+								</a>
+							</li>
+							<li aria-hidden="true">/</li>
+							<li class="text-green-100/95">Article</li>
+						</ol>
+					</nav>
+					<p class="mt-6 text-sm font-medium uppercase tracking-wider text-green-200/90">
+						{article.category}
+					</p>
+					<h1 class="mt-2 text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-[2.5rem]">
+						{article.title}
+					</h1>
+					<p class="mt-4 text-base text-green-100/95 sm:text-lg">
+						<time datetime={article.dateIso}>Publié le {article.dateLabel}</time>
+					</p>
+				</div>
+			</header>
+
+			<div class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+				<p class="text-lg font-medium leading-relaxed text-green-950">
+					{article.excerpt}
+				</p>
+				<div class="mt-8 space-y-4 text-base leading-relaxed text-neutral-700">
+					{article.paragraphs.map((p) => (
+						<p>{p}</p>
+					))}
+				</div>
+
+				<footer class="mt-12 border-t border-green-900/10 pt-8">
+					<a
+						href="/actualites"
+						class="inline-flex items-center gap-2 rounded-xl border border-green-900/20 bg-white px-4 py-3 text-sm font-semibold text-green-900 shadow-sm transition hover:border-green-900/35 hover:bg-green-50 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-900"
+					>
+						<svg
+							class="h-4 w-4"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+							/>
+						</svg>
+						Toutes les actualités
+					</a>
+				</footer>
+			</div>
+		</article>
+	</main>
+</Layout>
