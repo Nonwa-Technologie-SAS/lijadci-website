@@ -2,6 +2,7 @@
 import { Font } from "astro:assets";
 import Footer from '../components/widget/Footer.astro';
 import Header from '../components/widget/Header.astro';
+import InfoBanner from '../components/widget/InfoBanner.astro';
 import TopHeader from '../components/widget/TopHeader.astro';
 import "../styles/global.css";
 ---
@@ -19,6 +20,7 @@ import "../styles/global.css";
 	<body>
 		<TopHeader/>
 		<Header/>
+		<InfoBanner />
 		<slot />
 		<Footer/>
 	</body>

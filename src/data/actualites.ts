@@ -10,6 +10,7 @@ export type Actualite = {
 	excerpt: string;
 	category: string;
 	paragraphs: string[];
+	imageUrl?: string;
 };
 
 export const actualites: Actualite[] = [
@@ -26,6 +27,7 @@ export const actualites: Actualite[] = [
 			"Les animateur·ices ont mis l’accent sur des formats participatifs : travail en petits groupes, témoignages et mise en commun de bonnes pratiques. L’objectif est de renforcer la confiance et de créer des relais dans chaque quartier partenaire.",
 			"Les prochaines étapes prévoient l’élargissement du dispositif à d’autres communes, en lien avec les autorités locales et les partenaires associatifs. Les retours collectés serviront à ajuster le contenu des sessions et à documenter l’impact sur le long terme.",
 		],
+		imageUrl: "/assets/images/galerie/WhatsApp Image 2026-04-30 at 18.21.10.jpeg"
 	},
 	{
 		slug: "partenariat-acteurs-educatifs",
